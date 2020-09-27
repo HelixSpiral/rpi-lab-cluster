@@ -6,6 +6,7 @@
 '/boot/cmdline.txt':
   file.managed:
     - source: salt://rpi-4b-64bit/managed_files/cmdline.txt
+    - template: jinja
 
 # Disable hdmi output. Not needed in a headless server
 hdmi_off:
