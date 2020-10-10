@@ -14,8 +14,10 @@ base:
     - rpi-4b-64bit.configure
 
   # Configuration for the cluster master
-  # Currently this handles both the salt and k8s master
-  # Later we can split this out into roles and target by grain
-  # eg: role:salt-master and role:k8s-master
-  'rpi-cluster-master':
+  'kubernetes:k8s-master':
+    - match: grain
     - k8s_master_init
+
+  'kubernetes:k8s-minion':
+    - match: grain
+    - k8s_minion_init
