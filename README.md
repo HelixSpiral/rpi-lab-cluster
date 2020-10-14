@@ -9,7 +9,11 @@ This file contains admin tasks not covered by another sls
 
 ### salt/k8s_master_init.sls
 
-This file runs the kubeadmin init command and then sets a grain to prevent us from running it a second time.
+This file runs the kubeadm init command and then sets a grain to prevent us from running it a second time
+
+### salt/k8s_minion_init.sls
+
+This file runs the kubeadm join command and then sets a grain to prevent us from running it a second time
 
 ### salt/top.sls
 
@@ -76,11 +80,21 @@ This should be used only AFTER you have setup a k8s-master
 
 This is used by running: `sudo salt-run state.orch orch.setup-k8s-minion pillar='{"target-minion": "minion-name-here"}'`
 
+### salt/orch/setup-server.sls
+
+This orchestration gets the server ready to run Kubernetes and Docker by running the following states:
+- admin_tasks.sls
+- users.sls
+- docker/setup.sls
+- kubernetes/install.sls
+
 ### salt/orch/setup-raspberrypi-4b-64bit.sls
 
 This orchestration sets up a raspberry pi device to be used. 
 - Sets the `sbc:rpi-4b-64bit` grain for targeting within salt
 - Runs the `rpi-4b-64bit.sls` state
+- Reboots the device
+- Runs the `setup-server.sls` orchestration
 
 This is used by running: `sudo salt-run state.orch orch.setup-raspberrypi-4b-64bit pillar='{"target-minion": "minion-name-here"}'`
 
