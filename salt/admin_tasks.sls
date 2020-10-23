@@ -5,3 +5,8 @@
 swap_off:
   cmd.run:
     - name: swapoff -a
+
+# We have to make sure ip forwarding is enabled for ipv4
+'/etc/sysctl.conf':
+  file.managed:
+    - source: salt://managed_files/sysctl.conf
